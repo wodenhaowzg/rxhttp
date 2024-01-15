@@ -1,6 +1,6 @@
 apply plugin: 'java-library'
 apply plugin: 'kotlin'
-apply from: '../maven.gradle'
+//apply from: '../maven.gradle'
 
 sourceSets {
     main.java.srcDirs += "$buildDir/generated/sources/java-templates/java/main"
@@ -14,16 +14,17 @@ compileKotlin {
 task copyJavaTemplates(type: Copy) {
     from 'src/main/java-templates'
     into "$buildDir/generated/sources/java-templates/java/main"
-    expand('projectVersion': "${rxhttp_version}")
+    expand('projectVersion': "2.7.3")
     filteringCharset = 'UTF-8'
 }
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     compileOnly 'com.google.android:android:4.1.1.4'
-    compileOnly "com.squareup.okhttp3:okhttp:${okhttp_version}"
+    compileOnly "com.squareup.okhttp3:okhttp:4.9.3"
 //    api "com.github.liujingxing.rxhttp:rxhttp-annotation:${rxhttp_version}"
-    api project(":rxhttp-annotation")
+//    api project(":rxhttp-annotation")
+    api 'com.github.liujingxing.rxhttp:rxhttp-annotation:2.7.3'
     api 'com.google.code.gson:gson:2.8.7'
     api "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0"
 }

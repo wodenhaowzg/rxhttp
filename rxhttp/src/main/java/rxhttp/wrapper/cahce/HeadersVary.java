@@ -37,7 +37,11 @@ class HeadersVary {
         // Use the request headers sent over the network, since that's what the
         // response varies on. Otherwise OkHttp-supplied headers like
         // "Accept-Encoding: gzip" may be lost.
-        Headers requestHeaders = response.networkResponse().request().headers();
+        Response networkResponse = response.networkResponse();
+        if (networkResponse == null) {
+            return new Headers.Builder().build();
+        }
+        Headers requestHeaders = networkResponse.request().headers();
         Headers responseHeaders = response.headers();
         return varyHeaders(requestHeaders, responseHeaders);
     }
